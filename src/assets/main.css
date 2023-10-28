@@ -1,0 +1,15 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+/* 去掉a标签的下划线 */
+a{
+  text-decoration: none;
+}
+/* 设置a标签的统一样式 */
+a:hover{
+  color: #fa6725;
+}
+a:active{
+  color: #0c32ed;
+}
