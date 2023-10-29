@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const userApi = axios.create({
   baseURL: 'http://127.0.0.1:5000/user', // 设置你的基本URL
-  timeout: 5000, // 设置请求超时时间（单位：毫秒）
+  timeout: 3000, // 设置请求超时时间（单位：毫秒）
 });
 
 // 请求拦截器

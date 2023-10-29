@@ -93,13 +93,18 @@
 
 <style scoped>
 .box{
+    display: flex;
+    flex-wrap: wrap;
     height: 200px;
+    width: 100%;
+    min-width: 390px;
 }
 .book_box{
-    width: 100%;
+    width: 360px;
     height: 100%;
     display: flex;
     align-items: center;
+    margin-right: 20px;
 
     /* background-color: #4abe14; */
 }
@@ -175,7 +180,8 @@
     color: rgba(0,0,0,.4);
 }
 .author>div{
-    margin-right: 10px;
+    display: inline-block;
+    margin-right: 5px;
 }
 
 .abstract{

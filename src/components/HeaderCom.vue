@@ -37,7 +37,7 @@
     line-height: 80px;
     display: flex;
     color: #e3d6d6;
-    background: #000;
+    background-image: linear-gradient(to right, #221f22 , #899243);
     opacity: 0.9;
     z-index: 999;
 }
@@ -76,9 +76,11 @@
 
 .option a:hover{
     color: #12ebd9;
+    opacity: 0.5;
 }
 .option a:active{
     color: #eb1228;
+    opacity: 0.5;
 }
 .option>div:hover{
     background-color: #3956d9;

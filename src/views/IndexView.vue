@@ -63,7 +63,7 @@ text-align: center;
 }
 .index_content{
     position: relative;
-    width: 500px;
-    margin: 20px auto;
+    width: 100%;
+    height: auto;
 }
 </style>
