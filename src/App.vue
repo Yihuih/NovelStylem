@@ -6,9 +6,4 @@
 </template>
 
 <style scoped>
-div{
-  width: 400px;
-  height: 300px;
-  margin: auto;
-}
 </style>

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const userApi = axios.create({
   baseURL: 'http://127.0.0.1:5000/user', // 设置你的基本URL
@@ -9,6 +11,14 @@ const userApi = axios.create({
 userApi.interceptors.request.use(
   (config) => {
     // 可以在发送请求之前做一些操作，例如添加 token、修改请求头等
+
+
+    // 注册账号的时候生成并上传uuid
+    if(config.url==='/register'){
+    // 生成uuid
+    const uuid=uuidv4()
+      config.data={...config.data,uuid}
+    }
     return config;
   },
   (error) => {

@@ -1,3 +1,5 @@
+<!-- 账号注册界面 -->
+
 <script setup>
 import { reactive, ref } from 'vue'
 import userApi from '../../api/user';
@@ -25,10 +27,8 @@ const checkTel = (rule, value, callback) => {
     const telRegex = /^1\d{10}/
 
     if (telRegex.test(value)) {
-        console.log('验证通过');
         callback()
     } else {
-        console.log('checkPassword');
         callback(new Error('请输入11位电话号码'));
     }
 }
@@ -94,42 +94,51 @@ const checkUname = async (uname) => {
 
 
 // 注册函数
-const register = () => {
+const register = async () => {
     console.log(form.header);
-    formRef.value.validate((valid) => {
-        if (valid) {
-            // 表单验证通过，可以执行提交操作
-            console.log('验证通过');
-            // 发送请求
-            userApi.post('/register', form)
-                .then(result => {
-                    console.log(result);
-                    if (result.issucced) {
-                        ElMessage({
-                            message: result.msg,
-                            type: 'success'
-                        })
-                        setTimeout(() => {
-                            router.push('/login')
-                        }, 1500)
-                    } else {
-                        ElMessage({
-                            message: result.msg,
-                            type: 'error'
-                        })
-                    }
-                }).catch(error => {
-                    console.log(error);
-                })
+
+    // 首先，确保 formRef.value.validate 返回一个 Promise
+    await formRef.value.validate();
+
+    // 如果上述验证通过，会继续执行以下代码
+    // 发送请求
+    try {
+        const response = await userApi.post('/register', form);
+        console.log(response);
+
+        if (response.issucced) {
+            // 成功的情况
+            ElMessage({
+                message: response.msg,
+                type: 'success'
+            });
+            setTimeout(() => {
+                router.push('/login');
+            }, 1500);
+        } else {
+            // 失败的情况
+            ElMessage({
+                message: response.msg,
+                type: 'error'
+            });
         }
-    })
-}
+    } catch (error) {
+        // 捕捉可能的请求错误
+        console.error('请求出错：', error);
+        ElMessage({
+            message: '请求出错，请重试',
+            type: 'error'
+        });
+    }
+};
+
 
 //处理头像上传成功
 const headerurl = ref('http://127.0.0.1:5000/static/userHeader/默认头像.jpg')
 const handleUploadSuccess = (response, file) => {
     console.log(response, file);
     if (response.code === 200) {
+        form.header = response.data.url
         headerurl.value = 'http://127.0.0.1:5000' + response.data.url
     } else {
         ElMessage({
@@ -139,6 +148,7 @@ const handleUploadSuccess = (response, file) => {
     }
 }
 
+// 检查图片的格式和大小
 const beforeAvatarUpload = (rawFile) => {
     if (rawFile.type !== 'image/jpeg') {
         ElMessage.error('图片格式不正确,请上传jpeg格式')
@@ -165,7 +175,7 @@ const beforeAvatarUpload = (rawFile) => {
                         <el-input placeholder="请输入昵称" v-model="form.nickname"></el-input>
                     </el-form-item>
                     <el-form-item label="密 码:" prop="password">
-                        <el-input placeholder="请输入密码" v-model="form.password"></el-input>
+                        <el-input placeholder="请输入密码" v-model="form.password" type="password" clearable show-password></el-input>
                     </el-form-item>
                     <el-form-item label="生 日:">
                         <el-date-picker type="date" v-model="form.birthday" label="Pick a date" placeholder="请选择日期"
@@ -289,7 +299,8 @@ const beforeAvatarUpload = (rawFile) => {
     left: 0;
     z-index: 0;
 }
-:deep(.el-upload--picture-card){
+
+:deep(.el-upload--picture-card) {
     position: relative;
 }
 </style>

@@ -6,6 +6,7 @@ const routes=[
     redirect:'/login'
   },
   {
+    // 用户登录界面
     path: '/login',
     name: 'login',
     // route level code-splitting
@@ -14,17 +15,41 @@ const routes=[
     component: () => import('../views/LoginView.vue')
   },
   {
+    // 注册界面
     path: '/register',
     name: 'register',
     component: () => import('../views/RegisterView.vue')
   },
   {
+    // 主页
     path: '/index',
     name: 'index',
     component: () => import('../views/IndexView.vue')
   },
   {
-    // 匹配其他路由
+    // 个人中心页面
+    path: '/personalCenter',
+    name: 'personalCenter',
+    component: () => import('../views/PersonalPage.vue')
+  },
+
+
+
+
+
+
+
+
+
+// 后台系统的路由
+  {
+     // 后台主页
+     path: '/backgroundindex',
+     name: 'backgroundindex',
+     component: () => import('../views/backgroundViews/BackgroundIndex.vue')
+  },
+  {
+    // 匹配其他路由 404
     path: '/:catchAll(.*)',
     name: 'notfind',
     component: () => import('../views/NotFount.vue')
